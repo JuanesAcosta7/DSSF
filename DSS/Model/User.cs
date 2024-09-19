@@ -2,10 +2,10 @@
 {
     public class User
     {
-        int id {  get; set; }
-        public string name { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
+        public int id {  get; set; }
+        public required string name { get; set; }
+        public required string email { get; set; }
+        public required string password { get; set; }
         public User() { }
 
     }
