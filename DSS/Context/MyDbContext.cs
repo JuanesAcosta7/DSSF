@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using DSS.Model;
 
 namespace DSS.Context
 {
@@ -15,7 +16,7 @@ namespace DSS.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>()
-                .HasKey(x => x.Id);
+                .HasKey(u => u.id);
 
 
         }
