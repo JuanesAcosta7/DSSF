@@ -39,5 +39,6 @@ namespace DSS.Service
         {
             await _userRepository.SoftDeleteUserAsync(userId);
         }
+
     }
 }
