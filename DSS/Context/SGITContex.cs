@@ -7,12 +7,15 @@ namespace DSS.Context
     {
         public SGITContex(DbContextOptions options) : base(options)
         {
-            
+
         }
 
         public DbSet<User> users { get; set; }
         public DbSet<Rol> Rols { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
+        public DbSet<Driver> Drivers { get; set; }
+        public DbSet<Vehicles> Vehicles { get; set; }
+        public DbSet<Infracction> infracctions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -25,13 +28,19 @@ namespace DSS.Context
 
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<UserType>()
-                .HasKey(u => u.UserTypeId);
+               .HasKey(u => u.UserTypeId);
 
-           // modelBuilder.Entity<UserType>()
-             //   .HasOne(u => u.User)
-               // .WithMany(ut => ut.U);
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Driver>()
+                .HasKey(u => u.DriverId);
 
+           base.OnModelCreating(modelBuilder);
+           modelBuilder.Entity<Vehicles>()
+                .HasKey(u => u.VehicleId);
 
+           base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Infracction>()
+                .HasKey(u => u.InfracctionId);
         }
 
     }
