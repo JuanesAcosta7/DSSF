@@ -6,7 +6,7 @@ namespace DSS.Repository
     {
         Task<Rol> GetByRolIdAsync(int id);
         Task<IEnumerable<Rol>> GetAllAsync();
-        Task AddAsync(Rol rol);
+        Task Async(Rol rol);
         Task UpdateAsync(Rol rol);
         Task DeleteAsync(int id);
     }
