@@ -1,6 +1,11 @@
+using DSS.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var connec = builder.Configuration.GetConnectionString("Connection");
+builder.Services.AddDbContext<SGITContex>(options => options.UseSqlServer(connec));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
