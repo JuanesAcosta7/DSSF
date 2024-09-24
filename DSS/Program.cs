@@ -1,4 +1,6 @@
 using DSS.Context;
+using DSS.Interfaces;
+using DSS.Service;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+builder.Services.AddScoped<InRolRespository, RolRepository>();
+builder.Services.AddScoped<InRolService, RolService>();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
