@@ -11,12 +11,15 @@ namespace DSS.Context
             
         }
         public DbSet <User>Users { get; set; }
+        public DbSet <UserType> UsersType { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>()
                 .HasKey(x => x.Id);
+
+         
         }
     }
 }
