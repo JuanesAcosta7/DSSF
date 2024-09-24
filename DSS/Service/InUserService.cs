@@ -1,44 +1,52 @@
-﻿using DSS.Interfaces;
-using DSS.Model;
+﻿using DSS.Model;
+using DSS.Repository;
 
-namespace DSS.Service
+
+
+
+namespace DSS.Services
 {
-    public interface InUserService
+    public interface InUserServices
     {
         Task<IEnumerable<User>> GetAllUserAsync();
-        Task<User> GetUserByUserIdAsync(int userId);
-        Task<User> CreateUserAsync(User user);
-        Task<User> UpdateUserAsync(User user);
-        Task<User> SoftDeleteUserAsync(int userId);
+        Task<User> GetUserByIdAsync(int id);
+        Task CreateUserAsync(User user);
+        Task UpdateUserAsync(User user);
+        Task DeleteUserAsync(int id);
     }
-    public class UserService : InUserService
+    public class UserServices : InUserServices
     {
-        private readonly InUserRespository _userRepository;
+        private readonly InUserRepository _userRepository;
 
-        public UserService(InUserRespository userRepository)
+        public UserServices(InUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
+
         public async Task<IEnumerable<User>> GetAllUserAsync()
         {
             return await _userRepository.GetAllUserAsync();
         }
-        public async Task<User> GetUserByUserIdAsync(int userId)
+
+        public async Task<User> GetUserByIdAsync(int id)
         {
-            return await _userRepository.GetUserByUserIdAsync(userId);
+            return await _userRepository.GetUserByIdAsync(id);
         }
+
         public async Task CreateUserAsync(User user)
         {
             await _userRepository.CreateUserAsync(user);
         }
+
         public async Task UpdateUserAsync(User user)
         {
             await _userRepository.UpdateUserAsync(user);
         }
-        public async Task SoftDeleteUserAsync(int userId)
-        {
-            await _userRepository.SoftDeleteUserAsync(userId);
-        }
 
+        public async Task DeleteUserAsync(int id)
+        {
+            await _userRepository.DeleteUserAsync(id);
+        }
     }
 }
+

@@ -1,44 +1,51 @@
-﻿using DSS.Interfaces;
-using DSS.Model;
+﻿using DSS.Model;
+using DSS.Repository;
 
-namespace DSS.Service
+
+
+
+namespace DSS.Services
 {
-    public interface InUserTypeService
+    public interface InUserTypeServices
     {
-        Task<IEnumerable<UserType>> GetAllUserTypeAsync();
-        Task<UserType> GetUserTypeByUserTypeIdAsync(int Id);
-        Task<UserType> CreateUserTypeAsync(UserType usertype);
-        Task<UserType> UpdateUserTypeAsync(UserType usertype);
-        Task<UserType> SoftDeleteUserTypeAsync(int Id);
+        Task<IEnumerable<UserType>> GetAllUserTAsync();
+        Task<UserType> GetUserTByIdAsync(int id);
+        Task CreateUserTAsync(UserType usert);
+        Task UpdateUserTAsync(UserType usert);
+        Task DeleteUserTAsync(int id);
     }
-    public class UserTypeService : InUserTypeService
+    public class UserTServices : InUserTypeServices
     {
-        private readonly InUserTypeRespository _usertypeRepository;
+        private readonly InUserTypeRepository _usertRepository;
 
-        public UserTypeService(InUserTypeRespository usertypeRepository)
+        public UserTServices(InUserTypeRepository usertRepository)
         {
-            _usertypeRepository = usertypeRepository;
-        }
-        public async Task<IEnumerable<UserType>> GetAllUserTypeAsync()
-        {
-            return await _usertypeRepository.GetAllUserTypeAsync();
-        }
-        public async Task<User> GetUserTypeByUserTypeIdAsync(int Id)
-        {
-            return await _usertypeRepository.GetUserTypeByUserTypeIdAsync(Id);
-        }
-        public async Task CreateUserTypeAsync(UserType usertype)
-        {
-            await _usertypeRepository.CreateUserTypeAsync(usertype);
-        }
-        public async Task UpdateUserTypeAsync(UserType usertype)
-        {
-            await _usertypeRepository.UpdateUserTypeAsync(usertype);
-        }
-        public async Task SoftDeleteUserTypeAsync(int Id)
-        {
-            await _usertypeRepository.SoftDeleteUserTypeAsync(Id);
+            _usertRepository = usertRepository;
         }
 
+        public async Task<IEnumerable<UserType>> GetAllUserTAsync()
+        {
+            return await _usertRepository.GetAllUserTypeAsync();
+        }
+
+        public async Task<UserType> GetUserTByIdAsync(int id)
+        {
+            return await _usertRepository.GetUserTypeByIdAsync(id);
+        }
+
+        public async Task CreateUserTAsync(UserType usert)
+        {
+            await _usertRepository.CreateUserTypeAsync(usert);
+        }
+
+        public async Task UpdateUserTAsync(UserType usert)
+        {
+            await _usertRepository.UpdateUserTypeAsync(usert);
+        }
+
+        public async Task DeleteUserTAsync(int id)
+        {
+            await _usertRepository.DeleteUserTypeAsync(id);
+        }
     }
 }

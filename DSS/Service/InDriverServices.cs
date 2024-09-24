@@ -1,7 +1,5 @@
-﻿using DSS.Context;
-using DSS.Model;
+﻿using DSS.Model;
 using DSS.Repository;
-using Microsoft.EntityFrameworkCore;
 
 
 

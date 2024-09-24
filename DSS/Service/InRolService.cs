@@ -1,44 +1,51 @@
-﻿using DSS.Interfaces;
-using DSS.Model;
+﻿using DSS.Model;
+using DSS.Repository;
 
-namespace DSS.Service
+
+
+
+namespace DSS.Services
 {
-    public interface InRolService
+    public interface InRolServices
     {
         Task<IEnumerable<Rol>> GetAllRolAsync();
-        Task<Rol> GetRolByRolIdAsync(int rolId);
-        Task<Rol> CreateRolAsync(Rol rol);
-        Task<Rol> UpdateRolAsync(Rol rol);
-        Task<Rol> SoftDeleteRolAsync(int rolId);
+        Task<Rol> GetRolByIdAsync(int id);
+        Task CreateRolAsync(Rol rol);
+        Task UpdateRolAsync(Rol rol);
+        Task DeleteRolAsync(int id);
     }
-    public class RolService : InRolService
+    public class RolServices : InRolServices
     {
-        private readonly InRolRespository _RolRepository;
+        private readonly InRolRepository _rolRepository;
 
-        public RolService(InRolRespository rolRepository)
+        public RolServices(InRolRepository rolRepository)
         {
-            _RolRepository = rolRepository;
+            _rolRepository = rolRepository;
         }
+
         public async Task<IEnumerable<Rol>> GetAllRolAsync()
         {
-            return await _RolRepository.GetAllRolAsync();
+            return await _rolRepository.GetAllRolAsync();
         }
-        public async Task<Rol> GetRolByRolIdAsync(int rolId)
-        {
-           return await _RolRepository.GetRolByRolIdAsync(rolId);
 
+        public async Task<Rol> GetRolByIdAsync(int id)
+        {
+            return await _rolRepository.GetRolByIdAsync(id);
         }
+
         public async Task CreateRolAsync(Rol rol)
         {
-            await _RolRepository.CreateRolAsync(rol);
+            await _rolRepository.CreateRolAsync(rol);
         }
+
         public async Task UpdateRolAsync(Rol rol)
         {
-            await _RolRepository.UpdateRolAsync(rol);
+            await _rolRepository.UpdateRolAsync(rol);
         }
-        public async Task SoftDeleteRolAsync(int rolId)
+
+        public async Task DeleteRolAsync(int id)
         {
-            await _RolRepository.SoftDeleteRolAsync(rolId);
+            await _rolRepository.DeleteRolAsync(id);
         }
     }
 }
