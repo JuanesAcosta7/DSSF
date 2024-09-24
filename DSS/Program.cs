@@ -15,6 +15,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+//Config rol
+builder.Services.AddScoped<InRolRespository, RolRepository>();
+builder.Services.AddScoped<InRolService, RolService>();
+
 
 builder.Services.AddScoped<InUserRespository, UserRepository>();
 builder.Services.AddScoped<InUserService, UserService>();
