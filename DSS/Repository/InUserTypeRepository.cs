@@ -1,56 +1,60 @@
 ﻿using DSS.Context;
 using DSS.Model;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 
-namespace DSS.Interfaces
+namespace DSS.Repository
 {
-    public interface InUserTypeRespository
+    public interface InUserTypeRepository
     {
-        Task<UserType> GetUserTypeByUserTypeIdAsync(int id);
+        Task<UserType> GetUserTypeByIdAsync(int id);
         Task<IEnumerable<UserType>> GetAllUserTypeAsync();
-        Task CreateUserTypeAsync(UserType userType);
-        Task UpdateUserTypeAsync(UserType userType);
-        Task SoftDeleteUserTypeAsync(int id);
+        Task CreateUserTypeAsync(UserType usertype);
+        Task UpdateUserTypeAsync(UserType usertype);
+        Task DeleteUserTypeAsync(int id);
     }
-    public class UserTypeRepository : InUserTypeRespository
+
+    public class UserTypeRepository : InUserTypeRepository
     {
         private readonly SGITContex _context;
+
         public UserTypeRepository(SGITContex context)
         {
             _context = context;
         }
+
         public async Task<IEnumerable<UserType>> GetAllUserTypeAsync()
         {
             return await _context.UserTypes
-                .Where(s => !s.IsDelete)
-                .ToListAsync();
-        }
-        public async Task<UserType> GetUserTypeByUserTypeIdAsync(int id)
-        {
-            return await _context.UserTypes
-                .FirstOrDefaultAsync(s => s.UserTypeId == id && !s.IsDelete);
-        }
-        public async Task CreateUserTypeAsync(UserType userType)
-        {
-            await _context.UserTypes.CreateUserTypeAsync(userType);
-            await _context.SaveChangesAsync();
-        }
-        public async Task UpdateUserTypeAsync(UserType userType)
-        {
-            await _context.UserTypes.UpdateAsync(userType);
-            await _context.SaveChangesAsync();
+                                 .Where(s => !s.IsDelete) // Excluye eliminados
+                                 .ToListAsync();
         }
 
-        public async Task SoftDeleteUserTypeAsync(int id)
+        public async Task<UserType> GetUserTypeByIdAsync(int id)
         {
-            var usertype = await _context.UserTypes.FindAsync(id);
-            if (usertype != null)
+            return await _context.UserTypes
+                                 .FirstOrDefaultAsync(s => s.UserTypeId == id && !s.IsDelete);
+        }
+
+        public async Task DeleteUserTypeAsync(int id)
+        {
+            var userT = await _context.UserTypes.FindAsync(id); // Cambiado a 'infraction' para mayor claridad
+            if (userT != null && !userT.IsDelete) // Condición más clara
             {
-                usertype.IsDelete = true;
+                _context.UserTypes.Remove(userT); // Elimina el registro de la base de datos
                 await _context.SaveChangesAsync();
             }
         }
 
+        public async Task CreateUserTypeAsync(UserType usertype)
+        {
+            await _context.UserTypes.AddAsync(usertype);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateUserTypeAsync(UserType usertype)
+        {
+            _context.UserTypes.Update(usertype);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -1,56 +1,60 @@
 ﻿using DSS.Context;
 using DSS.Model;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 
-namespace DSS.Interfaces
+namespace DSS.Repository
 {
-    public interface InUserRespository
+    public interface InUserRepository
     {
-        Task<User> GetUserByUserIdAsync(int id);
+        Task<User> GetUserByIdAsync(int id);
         Task<IEnumerable<User>> GetAllUserAsync();
         Task CreateUserAsync(User user);
         Task UpdateUserAsync(User user);
-        Task SoftDeleteUserAsync(int id);
+        Task DeleteUserAsync(int id);
     }
-    public class UserRepository : InUserRespository
+
+    public class UserRepository : InUserRepository
     {
         private readonly SGITContex _context;
+
         public UserRepository(SGITContex context)
         {
             _context = context;
         }
+
         public async Task<IEnumerable<User>> GetAllUserAsync()
         {
             return await _context.users
-                .Where(s => !s.IsDelete)
-                .ToListAsync();
-        }
-        public async Task<User> GetUserByUserIdAsync(int id)
-        {
-            return await _context.users
-                .FirstOrDefaultAsync(s => s.UserId == id && !s.IsDelete);
-        }
-        public async Task CreateUserAsync(User user)
-        {
-            await _context.users.CreateUserAsync(user);
-            await _context.SaveChangesAsync();
-        }
-        public async Task UpdateUserAsync(User user)
-        {
-            await _context.users.UpdateAsync(user);
-            await _context.SaveChangesAsync();
+                                 .Where(s => !s.IsDelete) // Excluye eliminados
+                                 .ToListAsync();
         }
 
-        public async Task SoftDeleteUserAsync(int id)
+        public async Task<User> GetUserByIdAsync(int id)
         {
-            var user = await _context.users.FindAsync(id);
-            if (user != null)
+            return await _context.users
+                                 .FirstOrDefaultAsync(s => s.UserId == id && !s.IsDelete);
+        }
+
+        public async Task DeleteUserAsync(int id)
+        {
+            var user = await _context.users.FindAsync(id); // Cambiado a 'infraction' para mayor claridad
+            if (user != null && !user.IsDelete) // Condición más clara
             {
-                user.IsDelete = true;
+                _context.users.Remove(user); // Elimina el registro de la base de datos
                 await _context.SaveChangesAsync();
             }
         }
 
+        public async Task CreateUserAsync(User user)
+        {
+            await _context.users.AddAsync(user);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            _context.users.Update(user);
+            await _context.SaveChangesAsync();
+        }
     }
 }
