@@ -37,23 +37,23 @@ namespace DSS.Repository
 
         public async Task DeleteDriverAsync(int id)
         {
-            var subject = await _context.Drivers.FindAsync(id);
-            if (subject != null)
+            var Driver = await _context.Drivers.FindAsync(id);
+            if (Driver != null)
             {
-                subject.IsDeleted = true;
+                Driver.IsDeleted = true;
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task CreateDriversAsync(Driver subject)
+        public async Task CreateDriversAsync(Driver Driver)
         {
-            await _context.Drivers.AddAsync(subject);
+            await _context.Drivers.AddAsync(Driver);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateDriversAsync(Driver subject)
+        public async Task UpdateDriversAsync(Driver Driver)
         {
-            _context.Drivers.Update(subject);
+            _context.Drivers.Update(Driver);
             await _context.SaveChangesAsync();
         }
 
