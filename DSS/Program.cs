@@ -1,4 +1,6 @@
 using DSS.Context;
+using DSS.Interfaces;
+using DSS.Service;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,9 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+
+builder.Services.AddScoped<InUserTypeRespository, UserTypeRepository>();
+builder.Services.AddScoped<InUserTypeService, UserTypeService>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
