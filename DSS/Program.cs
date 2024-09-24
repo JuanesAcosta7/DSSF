@@ -25,7 +25,8 @@ builder.Services.AddScoped<InUserService, UserService>();
 builder.Services.AddScoped<InInfractionRepository, InfractionRepository>();
 builder.Services.AddScoped<InInfractionService, InfractionService>();
 
-
+builder.Services.AddScoped<InUserTypeRespository, UserTypeRepository>();
+builder.Services.AddScoped<InUserTypeService, UserTypeService>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
