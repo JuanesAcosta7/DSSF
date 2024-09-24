@@ -20,6 +20,11 @@ builder.Services.AddScoped<InRolRespository, RolRepository>();
 builder.Services.AddScoped<InRolService, RolService>();
 
 
+builder.Services.AddScoped<InUserRespository, UserRepository>();
+builder.Services.AddScoped<InUserService, UserService>();
+
+builder.Services.AddScoped<InInfractionRepository, InfractionRepository>();
+builder.Services.AddScoped<InInfractionService, InfractionService>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

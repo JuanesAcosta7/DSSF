@@ -33,7 +33,7 @@ namespace DSS.Interfaces
         }
         public async Task CreateUserAsync(User user)
         {
-            await _context.users.CreateAsync(user);
+            await _context.users.CreateUserAsync(user);
             await _context.SaveChangesAsync();
         }
         public async Task UpdateUserAsync(User user)
@@ -52,4 +52,5 @@ namespace DSS.Interfaces
             }
         }
 
+    }
 }
