@@ -1,6 +1,6 @@
 using DSS.Context;
-using DSS.Interfaces;
-using DSS.Service;
+using DSS.Repository;
+using DSS.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,17 +16,23 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 //Config rol
-builder.Services.AddScoped<InRolRespository, RolRepository>();
-builder.Services.AddScoped<InRolService, RolService>();
+builder.Services.AddScoped<InRolServices, RolServices>();
+builder.Services.AddScoped<InRolRepository, RolRepository>();
 
-builder.Services.AddScoped<InUserRespository, UserRepository>();
-builder.Services.AddScoped<InUserService, UserService>();
+builder.Services.AddScoped<InUserRepository, UserRepository>();
+builder.Services.AddScoped<InUserServices, UserServices>();
 
 builder.Services.AddScoped<InInfractionRepository, InfractionRepository>();
-builder.Services.AddScoped<InInfractionService, InfractionService>();
+builder.Services.AddScoped<InInfractionServices, InfractionServices>();
 
-builder.Services.AddScoped<InUserTypeRespository, UserTypeRepository>();
-builder.Services.AddScoped<InUserTypeService, UserTypeService>();
+builder.Services.AddScoped<InUserTypeRepository, UserTypeRepository>();
+builder.Services.AddScoped<InUserTypeServices, UserTServices>();
+
+builder.Services.AddScoped<InDriverRepository , DriverRepository>();
+builder.Services.AddScoped<InDriverServices, DriverServices>();
+
+builder.Services.AddScoped<InVehicleRepository , VehiclesRepository>();
+builder.Services.AddScoped<InVehicleServices, VehiclesServices>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

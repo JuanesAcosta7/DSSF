@@ -1,72 +1,85 @@
 ﻿using DSS.Model;
-using DSS.Service;
+using DSS.Services;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserTypeController
+public class UserTypeControllers : ControllerBase
 {
-    private readonly InUserTypeService _usertypeService;
+    private readonly InUserTypeServices _userTypeService;
 
-    public UserTypeController(InUserTypeService usertypeService)
+    public UserTypeControllers(InUserTypeServices usertypeService)
     {
-        _usertypeService = usertypeService;
+        _userTypeService = usertypeService;
     }
 
-    [HttpGet("{id}")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<UserType>>> GetAllUserType()
+    public async Task<ActionResult<IEnumerable<User>>> GetAllUser()
     {
-        var usertypes = await _usertypeService.GetAllUserTypeAsync();
-        return Ok(usertypes);
+        var usersT = await _userTypeService.GetAllUserTAsync();
+        return Ok(usersT);
     }
+
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserType>> GetUserTypeByUserTypeId(int id)
+    public async Task<ActionResult<UserType>> GetUserTypeById(int id)
     {
-        var usertype = await _usertypeService.GetUserTypeByUserTypeIdAsync(id);
-        if (usertype == null)
+        var usert = await _userTypeService.GetUserTByIdAsync(id);
+        if (usert == null)
+        {
             return NotFound();
-
-        return Ok(user);
+        }
+        return Ok(usert);
     }
-    [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> CreateUserType([FromBody] UserType usertype)
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> CreateUserType([FromBody] UserType userType)
     {
         if (!ModelState.IsValid)
+        {
             return BadRequest(ModelState);
+        }
 
-        await _usertypeService.CreateUserTypeAsync(usertype);
-        return CreatedAtAction(nameof(GetUserTypeByUserTypeId), new { id = usertype.UserTypeId }, usertype);
+        await _userTypeService.CreateUserTAsync(userType);
+
+        return CreatedAtAction(nameof(GetUserTypeById), new { id = userType.UserTypeId }, userType);
     }
-    [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateUserType(int id, [FromBody] UserType usertype)
+    public async Task<IActionResult> UpdateUserType(int id, [FromBody] UserType usert)
     {
-        if (id != usertype.UserTypeId)
+        if (id != usert.UserTypeId)
+        {
             return BadRequest();
-        var existingUser = await _usertypeService.GetUserTypeByUserTypeIdAsync(id);
-        if (existingUser == null)
-            return NotFound();
+        }
 
-        await _usertypeService.UpdateUserTypeAsync(usertype);
+        var userT = await _userTypeService.GetUserTByIdAsync(id);
+        if (usert == null)
+        {
+            return NotFound();
+        }
+
+        await _userTypeService.UpdateUserTAsync(usert);
         return NoContent();
-
     }
-    [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> SoftDeletedUserType(int id)
+    public async Task<IActionResult> DeleteType(int id)
     {
-        var usertype = await _usertypeService.GetUserTypeByUserTypeIdAsync(id);
-        if (usertype == null)
+        var userT = await _userTypeService.GetUserTByIdAsync(id);
+        if (userT == null)
+        {
             return NotFound();
-        await _usertypeService.SoftDeleteUserTypeAsync(id);
+        }
+
+        await _userTypeService.DeleteUserTAsync(id);
         return NoContent();
     }
 }
