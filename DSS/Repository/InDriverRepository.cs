@@ -47,8 +47,17 @@ namespace DSS.Repository
 
         public async Task CreateDriversAsync(Driver Driver)
         {
-            await _context.Drivers.AddAsync(Driver);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.Drivers.AddAsync(Driver);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+            
         }
 
         public async Task UpdateDriversAsync(Driver Driver)
