@@ -14,10 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
 //Config rol
-builder.Services.AddScoped<InRolServices, RolServices>();
 builder.Services.AddScoped<InRolRepository, RolRepository>();
+builder.Services.AddScoped<InRolServices, RolServices>();
 
 builder.Services.AddScoped<InUserRepository, UserRepository>();
 builder.Services.AddScoped<InUserServices, UserServices>();
@@ -28,11 +27,14 @@ builder.Services.AddScoped<InInfractionServices, InfractionServices>();
 builder.Services.AddScoped<InUserTypeRepository, UserTypeRepository>();
 builder.Services.AddScoped<InUserTypeServices, UserTServices>();
 
-builder.Services.AddScoped<InDriverRepository , DriverRepository>();
+builder.Services.AddScoped<InDriverRepository, DriverRepository>();
 builder.Services.AddScoped<InDriverServices, DriverServices>();
 
-builder.Services.AddScoped<InVehicleRepository , VehiclesRepository>();
+builder.Services.AddScoped<InVehicleRepository, VehiclesRepository>();
 builder.Services.AddScoped<InVehicleServices, VehiclesServices>();
+
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
