@@ -4,67 +4,67 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserControllers : ControllerBase
+public class RolControllers : ControllerBase
 {
-    private readonly InUserServices _userService;
+    private readonly InRolServices _rolService;
 
-    public UserControllers(InUserServices userService)
+    public RolControllers(InRolServices rolService)
     {
-        _userService = userService;
+        _rolService = rolService;
     }
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<User>>> GetAllUser()
+    public async Task<ActionResult<IEnumerable<Rol>>> GetAllRol()
     {
-        var users = await _userService.GetAllUserAsync();
-        return Ok(users);
+        var rols = await _rolService.GetAllRolAsync();
+        return Ok(rols);
     }
 
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Rol>> GetUserById(int id)
+    public async Task<ActionResult<Rol>> GetRolById(int id)
     {
-        var user = await _userService.GetUserByIdAsync(id);
-        if (user == null)
+        var rols = await _rolService.GetRolByIdAsync(id);
+        if (rols == null)
         {
             return NotFound();
         }
-        return Ok(user);
+        return Ok(rols);
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> CreateUser([FromBody] User user)
+    public async Task<ActionResult> CreateRol([FromBody] Rol rol)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        await _userService.CreateUserAsync(user);
+        await _rolService.CreateRolAsync(rol);
 
-        return CreatedAtAction(nameof(GetUserById), new { id = user.UserId }, user);
+        return CreatedAtAction(nameof(GetRolById), new { id = rol.RolId }, rol);
     }
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateUser(int id, [FromBody] User user)
+    public async Task<IActionResult> UpdateRol(int id, [FromBody] Rol rol)
     {
-        if (id != user.UserId)
+        if (id != rol.RolId)
         {
             return BadRequest();
         }
 
-        var users = await _userService.GetUserByIdAsync(id);
-        if (user == null)
+        var rols = await _rolService.GetRolByIdAsync(id);
+        if (rols == null)
         {
             return NotFound();
         }
 
-        await _userService.UpdateUserAsync(user);
+        await _rolService.UpdateRolAsync(rol);
         return NoContent();
     }
 
@@ -73,15 +73,14 @@ public class UserControllers : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteRol(int id)
     {
-        var users = await _userService.GetUserByIdAsync(id);
-        if (users == null)
+        var rol = await _rolService.GetRolByIdAsync(id);
+        if (rol == null)
         {
             return NotFound();
         }
 
-        await _userService.DeleteUserAsync(id);
+        await _rolService.DeleteRolAsync(id);
         return NoContent();
     }
 }
-
 

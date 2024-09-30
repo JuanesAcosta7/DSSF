@@ -1,48 +1,51 @@
-﻿using DSS.Interfaces;
-using DSS.Model;
+﻿using DSS.Model;
+using DSS.Repository;
 
-namespace DSS.Service
+
+
+
+namespace DSS.Services
 {
-    public interface InInfractionService
+    public interface InInfractionServices
     {
         Task<IEnumerable<Infracction>> GetAllInfractionAsync();
-        Task<Infracction> GetInfractionByInfractionIdAsync(int Id);
-        Task<Infracction> CreateInfractionAsync(Infracction infracction);
-        Task<Infracction> UpdateInfractionAsync(Infracction infracction);
-        Task<Infracction> SoftDeleteInfractionAsync(int Id);
+        Task<Infracction> GetInfractionByIdAsync(int id);
+        Task CreateInfractionAsync(Infracction infracction);
+        Task UpdateInfractionAsync(Infracction infracction);
+        Task DeleteInfractionAsync(int id);
     }
-    public class InfractionService : InInfractionService
+    public class InfractionServices : InInfractionServices
     {
-        private readonly InInfractionRepository _InfractionRepository;
+        private readonly InInfractionRepository _infractionRepository;
 
-        public InfractionService(InInfractionRepository infractionRepository)
+        public InfractionServices(InInfractionRepository InfractionRepository)
         {
-            _InfractionRepository = infractionRepository;
-        }
-
-        public async Task<Infracction> CreateInfractionAsync(Infracction infracction)
-        {
-            await _InfractionRepository.CreateInfractionAsync(infracction);
+            _infractionRepository = InfractionRepository;
         }
 
         public async Task<IEnumerable<Infracction>> GetAllInfractionAsync()
         {
-            return await _InfractionRepository.GetAllInfractionAsync();
+            return await _infractionRepository.GetAllInfractionsAsync();
         }
 
-        public async Task<Infracction> GetInfractionByInfractionIdAsync(int Id)
+        public async Task<Infracction> GetInfractionByIdAsync(int id)
         {
-            return await _InfractionRepository.GetInfractionByInfractionIdAsync(Id);
+            return await _infractionRepository.GetInfractionByIdAsync(id);
         }
 
-        public async Task<Infracction> SoftDeleteInfractionAsync(int Id)
+        public async Task CreateInfractionAsync(Infracction infracction)
         {
-            await _InfractionRepository.SoftDeleteInfractionAsync(Id);
+            await _infractionRepository.CreateInfractionAsync(infracction);
         }
 
-        public async Task<Infracction> UpdateInfractionAsync(Infracction infracction)
+        public async Task UpdateInfractionAsync(Infracction infracction)
         {
-            await _InfractionRepository.UpdateInfractionAsync(infracction);
+            await _infractionRepository.UpdateInfractionAsync(infracction);
+                }
+
+        public async Task DeleteInfractionAsync(int id)
+        {
+            await _infractionRepository.DeleteInfractionAsync(id);
         }
     }
 }

@@ -4,84 +4,82 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserControllers : ControllerBase
+public class UserTypeControllers : ControllerBase
 {
-    private readonly InUserServices _userService;
+    private readonly InUserTypeServices _userTypeService;
 
-    public UserControllers(InUserServices userService)
+    public UserTypeControllers(InUserTypeServices usertypeService)
     {
-        _userService = userService;
+        _userTypeService = usertypeService;
     }
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<User>>> GetAllUser()
     {
-        var users = await _userService.GetAllUserAsync();
-        return Ok(users);
+        var usersT = await _userTypeService.GetAllUserTAsync();
+        return Ok(usersT);
     }
 
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Rol>> GetUserById(int id)
+    public async Task<ActionResult<UserType>> GetUserTypeById(int id)
     {
-        var user = await _userService.GetUserByIdAsync(id);
-        if (user == null)
+        var usert = await _userTypeService.GetUserTByIdAsync(id);
+        if (usert == null)
         {
             return NotFound();
         }
-        return Ok(user);
+        return Ok(usert);
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> CreateUser([FromBody] User user)
+    public async Task<ActionResult> CreateUserType([FromBody] UserType userType)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        await _userService.CreateUserAsync(user);
+        await _userTypeService.CreateUserTAsync(userType);
 
-        return CreatedAtAction(nameof(GetUserById), new { id = user.UserId }, user);
+        return CreatedAtAction(nameof(GetUserTypeById), new { id = userType.UserTypeId }, userType);
     }
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateUser(int id, [FromBody] User user)
+    public async Task<IActionResult> UpdateUserType(int id, [FromBody] UserType usert)
     {
-        if (id != user.UserId)
+        if (id != usert.UserTypeId)
         {
             return BadRequest();
         }
 
-        var users = await _userService.GetUserByIdAsync(id);
-        if (user == null)
+        var userT = await _userTypeService.GetUserTByIdAsync(id);
+        if (usert == null)
         {
             return NotFound();
         }
 
-        await _userService.UpdateUserAsync(user);
+        await _userTypeService.UpdateUserTAsync(usert);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteRol(int id)
+    public async Task<IActionResult> DeleteType(int id)
     {
-        var users = await _userService.GetUserByIdAsync(id);
-        if (users == null)
+        var userT = await _userTypeService.GetUserTByIdAsync(id);
+        if (userT == null)
         {
             return NotFound();
         }
 
-        await _userService.DeleteUserAsync(id);
+        await _userTypeService.DeleteUserTAsync(id);
         return NoContent();
     }
 }
-
-

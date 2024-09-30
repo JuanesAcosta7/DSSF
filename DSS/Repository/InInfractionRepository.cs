@@ -1,57 +1,60 @@
 ﻿using DSS.Context;
-using DSS.Interfaces;
 using DSS.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace DSS.Service
+namespace DSS.Repository
 {
     public interface InInfractionRepository
     {
-        Task<IEnumerable<Infracction>> GetAllInfractionAsync();
-        Task<Infracction> GetInfractionByInfractionIdAsync(int Id);
-        Task<Infracction> CreateInfractionAsync(Infracction infracction);
-        Task<Infracction> UpdateInfractionAsync(Infracction infracction);
-        Task<Infracction> SoftDeleteInfractionAsync(int Id);
+        Task<Infracction> GetInfractionByIdAsync(int id);
+        Task<IEnumerable<Infracction>> GetAllInfractionsAsync();
+        Task CreateInfractionAsync(Infracction infracction);
+        Task UpdateInfractionAsync(Infracction infracction);
+        Task DeleteInfractionAsync(int id);
     }
+
     public class InfractionRepository : InInfractionRepository
     {
         private readonly SGITContex _context;
+
         public InfractionRepository(SGITContex context)
         {
             _context = context;
         }
-        public async Task<IEnumerable<Infracction>> GetAllInfractionAsync()
+
+        public async Task<IEnumerable<Infracction>> GetAllInfractionsAsync()
         {
             return await _context.infracctions
-                .Where(s => !s.IsDelete)
-                .ToListAsync();
+                                 .Where(s => !s.IsDelete) // Excluye eliminados
+                                 .ToListAsync();
         }
+
+        public async Task<Infracction> GetInfractionByIdAsync(int id)
+        {
+            return await _context.infracctions
+                                 .FirstOrDefaultAsync(s => s.InfracctionId == id && !s.IsDelete);
+        }
+
+        public async Task DeleteInfractionAsync(int id)
+        {
+            var infraction = await _context.infracctions.FindAsync(id); // Cambiado a 'infraction' para mayor claridad
+            if (infraction != null && !infraction.IsDelete) // Condición más clara
+            {
+                _context.infracctions.Remove(infraction); // Elimina el registro de la base de datos
+                await _context.SaveChangesAsync();
+            }
+        }
+
         public async Task CreateInfractionAsync(Infracction infracction)
         {
+            await _context.infracctions.AddAsync(infracction);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateInfractionAsync(Infracction infracction)
         {
-            
+            _context.infracctions.Update(infracction);
+            await _context.SaveChangesAsync();
         }
-
-        public async Task SoftDeleteInfractionAsync(int id)
-        {
-            var infracction = await _context.infracctions.FindAsync(id);
-            if (infracction != null)
-            {
-                infracction.IsDelete = true;
-                await _context.SaveChangesAsync();
-            }
-        }
-
-        public async Task<Infracction> GetInfractionByInfractionIdAsync(int Id)
-        {
-            return await _context.infracctions
-            .FirstOrDefaultAsync(s => s.InfracctionId == Id && !s.IsDelete);
-        }
-
-
     }
 }
