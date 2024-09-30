@@ -14,7 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//Config rol
+//Config 
 builder.Services.AddScoped<InRolRepository, RolRepository>();
 builder.Services.AddScoped<InRolServices, RolServices>();
 
