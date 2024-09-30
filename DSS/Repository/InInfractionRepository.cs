@@ -32,7 +32,8 @@ namespace DSS.Repository
         public async Task<Infracction> GetInfractionByIdAsync(int id)
         {
             return await _context.infracctions
-                                 .FirstOrDefaultAsync(s => s.InfracctionId == id && !s.IsDelete);
+                         .AsNoTracking()
+                         .FirstOrDefaultAsync(s => s.InfracctionId == id && !s.IsDelete);
         }
 
         public async Task DeleteInfractionAsync(int id)

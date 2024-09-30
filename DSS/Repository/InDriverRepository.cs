@@ -32,6 +32,7 @@ namespace DSS.Repository
         public async Task<Driver> GetDriversByIdAsync(int id)
         {
             return await _context.Drivers
+                .AsNoTracking()
                 .FirstOrDefaultAsync(s => s.DriverId == id && !s.IsDeleted);
         }
 

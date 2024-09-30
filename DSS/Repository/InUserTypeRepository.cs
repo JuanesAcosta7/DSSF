@@ -32,6 +32,7 @@ namespace DSS.Repository
         public async Task<UserType> GetUserTypeByIdAsync(int id)
         {
             return await _context.UserTypes
+                .AsNoTracking()
                                  .FirstOrDefaultAsync(s => s.UserTypeId == id && !s.IsDelete);
         }
 
