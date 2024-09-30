@@ -45,7 +45,7 @@ namespace DSS.Migrations
 
                     b.HasKey("DriverId");
 
-                    b.ToTable("Drivers");
+                    b.ToTable("Drivers", (string)null);
                 });
 
             modelBuilder.Entity("DSS.Model.Infracction", b =>
@@ -89,7 +89,7 @@ namespace DSS.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("infracctions");
+                    b.ToTable("infracctions", (string)null);
                 });
 
             modelBuilder.Entity("DSS.Model.Rol", b =>
@@ -109,7 +109,7 @@ namespace DSS.Migrations
 
                     b.HasKey("RolId");
 
-                    b.ToTable("Rols");
+                    b.ToTable("Rols", (string)null);
                 });
 
             modelBuilder.Entity("DSS.Model.User", b =>
@@ -137,7 +137,7 @@ namespace DSS.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("users");
+                    b.ToTable("users", (string)null);
                 });
 
             modelBuilder.Entity("DSS.Model.UserType", b =>
@@ -163,7 +163,7 @@ namespace DSS.Migrations
 
                     b.HasIndex("typeRolId");
 
-                    b.ToTable("UserTypes");
+                    b.ToTable("UserTypes", (string)null);
                 });
 
             modelBuilder.Entity("DSS.Model.Vehicles", b =>
@@ -195,7 +195,7 @@ namespace DSS.Migrations
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("Vehicles");
+                    b.ToTable("Vehicles", (string)null);
                 });
 
             modelBuilder.Entity("DSS.Model.Infracction", b =>

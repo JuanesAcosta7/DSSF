@@ -32,6 +32,7 @@ namespace DSS.Repository
         public async Task<Vehicles> GetVehicleByIdAsync(int id)
         {
             return await _context.Vehicles
+                .AsNoTracking()
                 .FirstOrDefaultAsync(s => s.VehicleId == id && !s.IsDelete);
         }
 

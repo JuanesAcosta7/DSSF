@@ -32,6 +32,7 @@ namespace DSS.Repository
         public async Task<User> GetUserByIdAsync(int id)
         {
             return await _context.users
+                .AsNoTracking()
                                  .FirstOrDefaultAsync(s => s.UserId == id && !s.IsDelete);
         }
 

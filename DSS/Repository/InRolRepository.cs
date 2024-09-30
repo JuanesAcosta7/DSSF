@@ -32,6 +32,7 @@ namespace DSS.Repository
         public async Task<Rol> GetRolByIdAsync(int id)
         {
             return await _context.Rols
+                .AsNoTracking()
                                  .FirstOrDefaultAsync(s => s.RolId == id && !s.IsDelete);
         }
 
