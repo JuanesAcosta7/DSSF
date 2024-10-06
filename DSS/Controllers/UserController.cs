@@ -1,7 +1,7 @@
 ﻿using DSS.Model;
 using DSS.Services;
 using Microsoft.AspNetCore.Mvc;
-
+using DSS.DTOs;
 [ApiController]
 [Route("api/[controller]")]
 public class UserControllers : ControllerBase
@@ -33,7 +33,24 @@ public class UserControllers : ControllerBase
         }
         return Ok(user);
     }
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginDTO loginDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);  // Si los datos no son válidos
+        }
 
+        var user = await _userService.LoginAsync(loginDto.Email, loginDto.Password);
+
+        if (user == null)
+        {
+            return Unauthorized("Credenciales inválidas.");
+        }
+
+        // Aquí podrías generar un token JWT o similar, pero por ahora retornamos los datos del usuario
+        return Ok(new { message = "Inicio de sesión exitoso", userId = user.UserId });
+    }
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
