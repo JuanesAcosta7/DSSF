@@ -10,6 +10,7 @@ namespace DSS.Services
     {
         Task<IEnumerable<User>> GetAllUserAsync();
         Task<User> GetUserByIdAsync(int id);
+        Task<User> LoginAsync(string email, string password);
         Task CreateUserAsync(User user);
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(int id);
@@ -46,6 +47,23 @@ namespace DSS.Services
         public async Task DeleteUserAsync(int id)
         {
             await _userRepository.DeleteUserAsync(id);
+        }
+        public async Task<User> LoginAsync(string email, string password)
+        {
+
+            var user = await _userRepository.GetUserByEmailAsync(email);
+            if (user == null || user.IsDelete)
+            {
+                return null;  
+            }
+
+            
+            if (user.Password != password)
+            {
+                return null;  
+            }
+
+            return user;  
         }
     }
 }

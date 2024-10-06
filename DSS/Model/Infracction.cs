@@ -11,6 +11,8 @@
         public required Vehicles Vehicle { get; set; }
        public required string PaymentStatus { get; set; }
        public bool IsDelete { get; set; } = false;
+        public DateTime Modified { get; set; }
+        public required string ModifiedBy { get; set; }
 
-   }
+    }
 }

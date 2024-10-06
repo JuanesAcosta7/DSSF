@@ -11,8 +11,9 @@ namespace DSS.Repository
         Task CreateUserAsync(User user);
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(int id);
+        Task<User> GetUserByEmailAsync(string email);
     }
-
+    
     public class UserRepository : InUserRepository
     {
         private readonly SGITContex _context;
@@ -35,7 +36,12 @@ namespace DSS.Repository
                 .AsNoTracking()
                                  .FirstOrDefaultAsync(s => s.UserId == id && !s.IsDelete);
         }
-
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            return await _context.users
+                .AsNoTracking()
+                                 .FirstOrDefaultAsync(s => s.Email == email && !s.IsDelete);
+        }
         public async Task DeleteUserAsync(int id)
         {
             var user = await _context.users.FindAsync(id); // Cambiado a 'infraction' para mayor claridad
