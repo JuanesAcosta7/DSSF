@@ -1,0 +1,72 @@
+/* Estilos generales para el cuerpo de la aplicación */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Contenedor principal */
+div {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+/* Títulos */
+h2 {
+    color: #343a40;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Estilos para la lista de conductores */
+ul {
+    list-style-type: none; /* Elimina los puntos de la lista */
+    padding: 0;
+}
+
+li {
+    display: flex; /* Utiliza flexbox para alinear elementos */
+    justify-content: space-between; /* Espacio entre el texto y los botones */
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6; /* Línea divisoria entre los elementos */
+}
+
+    li:last-child {
+        border-bottom: none; /* Elimina la línea divisoria en el último elemento */
+    }
+
+/* Estilos para los botones */
+button {
+    background-color: #007bff; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px; /* Espaciado interno del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s; /* Transición suave para el color de fondo */
+}
+
+    /* Efecto al pasar el mouse sobre el botón */
+    button:hover {
+        background-color: #0056b3; /* Color de fondo al pasar el mouse */
+    }
+
+    /* Estilo para el botón de agregar conductor */
+    button.add-driver {
+        background-color: #28a745; /* Color de fondo para el botón de agregar */
+        margin-bottom: 20px; /* Espaciado inferior */
+    }
+
+        button.add-driver:hover {
+            background-color: #218838; /* Color de fondo al pasar el mouse */
+        }
+
+/* Mensajes */
+p {
+    color: #dc3545; /* Color rojo para mensajes de error */
+}

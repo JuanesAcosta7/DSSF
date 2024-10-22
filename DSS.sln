@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSS", "DSS\DSS.csproj", "{E4E8E121-5BDB-4E7E-8793-B3781E26EA0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSS", "DSS\DSS.csproj", "{E4E8E121-5BDB-4E7E-8793-B3781E26EA0C}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "frontdss", "FrontDSS\frontdss.esproj", "{EAEC5E79-B1AF-445C-A35E-03BCFF8C04BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,12 @@ Global
 		{E4E8E121-5BDB-4E7E-8793-B3781E26EA0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4E8E121-5BDB-4E7E-8793-B3781E26EA0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4E8E121-5BDB-4E7E-8793-B3781E26EA0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAEC5E79-B1AF-445C-A35E-03BCFF8C04BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAEC5E79-B1AF-445C-A35E-03BCFF8C04BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAEC5E79-B1AF-445C-A35E-03BCFF8C04BF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{EAEC5E79-B1AF-445C-A35E-03BCFF8C04BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAEC5E79-B1AF-445C-A35E-03BCFF8C04BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAEC5E79-B1AF-445C-A35E-03BCFF8C04BF}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
