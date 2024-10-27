@@ -14,6 +14,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Configuracio CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin() // Permitir solicitudes desde cualquier origen
+                   .AllowAnyMethod()  // Permitir cualquier método (GET, POST, etc.)
+                   .AllowAnyHeader(); // Permitir cualquier cabecera
+        });
+});
 //Config 
 builder.Services.AddScoped<InRolRepository, RolRepository>();
 builder.Services.AddScoped<InRolServices, RolServices>();
@@ -36,10 +47,13 @@ builder.Services.AddScoped<InVehicleServices, VehiclesServices>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-//
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
+//}
+
+app.UseCors("AllowAllOrigins");
 
 app.UseHttpsRedirection();
 
