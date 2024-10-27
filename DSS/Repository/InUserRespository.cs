@@ -1,4 +1,5 @@
-﻿using DSS.Context;
+﻿using BCrypt.Net;
+using DSS.Context;
 using DSS.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -54,6 +55,7 @@ namespace DSS.Repository
 
         public async Task CreateUserAsync(User user)
         {
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             await _context.users.AddAsync(user);
             await _context.SaveChangesAsync();
         }
