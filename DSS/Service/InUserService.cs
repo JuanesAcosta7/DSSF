@@ -1,4 +1,5 @@
-﻿using DSS.Model;
+﻿using BCrypt.Net;
+using DSS.Model;
 using DSS.Repository;
 
 
@@ -48,23 +49,24 @@ namespace DSS.Services
         {
             await _userRepository.DeleteUserAsync(id);
         }
-        public async Task<User> LoginAsync(string email, string password)
+
+public async Task<User> LoginAsync(string email, string password)
+    {
+        var user = await _userRepository.GetUserByEmailAsync(email);
+        if (user == null || user.IsDelete)
         {
-
-            var user = await _userRepository.GetUserByEmailAsync(email);
-            if (user == null || user.IsDelete)
-            {
-                return null;  
-            }
-
-            
-            if (user.Password != password)
-            {
-                return null;  
-            }
-
-            return user;  
+            return null;
         }
+
+
+        if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
+        {
+            return null;
+        }
+
+        return user;
     }
+
+}
 }
 
