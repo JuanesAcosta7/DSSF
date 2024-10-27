@@ -18,6 +18,10 @@ import VehicleHome from './Pages/VehicleHome';
 import VehicleDetail from './components/VehiclesDetail';
 import VehicleCreate from './Pages/VehicleCreate';
 import VehicleUpdate from './Pages/VehicleUpdate';
+import RolHome from './Pages/RolHome';
+import RolDetail from './components/RolDetail';
+import RolCreate from './Pages/RolCreate';
+import RolUpdate from './Pages/RolUpdate';
 function App() {
     return (
         <Router>
@@ -40,6 +44,10 @@ function App() {
                 <Route path="/vehicles/:id" element={<VehicleDetail />} />
                 <Route path="/create-vehicle" element={<VehicleCreate />} />
                 <Route path="/update-vehicle/:id" element={<VehicleUpdate />} /> 
+                <Route path="/roles" element={<RolHome />} />
+                <Route path="/roles/:Id" element={<RolDetail />} />
+                <Route path="/create-role" element={<RolCreate />} />
+                <Route path="/update-role/:id" element={<RolUpdate />} /> 
             </Routes>
         </Router>
     );
