@@ -1,11 +1,11 @@
 import React from 'react';
-import UserList from '../components/UserList.js'; // Asegúrate de tener este componente
+import UserList from '../components/UserList.js'; 
 
 const HomeUser = () => {
     return (
         <div>
             <h1>Usuarios</h1>
-            <UserList /> {/* Este componente mostrará la lista de usuarios */}
+            <UserList /> 
         </div>
     );
 };

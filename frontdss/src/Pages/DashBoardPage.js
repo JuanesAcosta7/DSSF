@@ -1,5 +1,5 @@
 import React from 'react';
-import EntityDashboard from '../components/EntitySelection.js'; // Asegúrate de importar el componente correctamente
+import EntityDashboard from '../components/EntitySelection.js';
 
 const DashboardPage = () => {
     return (

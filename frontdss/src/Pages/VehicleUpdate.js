@@ -1,35 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { GetDriverById, UpdateDriver } from '../Service/DriverService.js';
+import { GetVehicleById, UpdateVehicle } from '../Service/VehicleService.js'; 
 
-const UpdateDriverPage = () => {
+const UpdateVehiclePage = () => {
     const { id } = useParams(); 
     const navigate = useNavigate(); 
-    const [driver, setDriver] = useState({
-        DriverName: '',
-        LicenseNumber: '',
-        Phone: '',
+    const [vehicle, setVehicle] = useState({
+        VehicleName: '',
+        LicensePlate: '',
+        Model: '',
         ModifiedBy: ''
     });
 
     useEffect(() => {
-        const fetchDriver = async () => {
-            console.log("Driver ID from URL:", id); 
+        const fetchVehicle = async () => {
+            console.log("Vehicle ID from URL:", id); 
             try {
-                const fetchedDriver = await GetDriverById(id);
-                if (fetchedDriver) {
-                    setDriver(fetchedDriver);
+                const fetchedVehicle = await GetVehicleById(id);
+                if (fetchedVehicle) {
+                    setVehicle(fetchedVehicle);
                 }
             } catch (error) {
-                console.error("Error fetching driver:", error);
+                console.error("Error fetching vehicle:", error);
             }
         };
-        fetchDriver();
+        fetchVehicle();
     }, [id]);
 
     const handleChange = (e) => {
-        setDriver({
-            ...driver,
+        setVehicle({
+            ...vehicle,
             [e.target.name]: e.target.value
         });
     };
@@ -37,44 +37,44 @@ const UpdateDriverPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log("Updating driver with data:", driver); 
-            await UpdateDriver(id, driver);
+            console.log("Updating vehicle with data:", vehicle); 
+            await UpdateVehicle(id, vehicle);
             navigate('/'); 
         } catch (error) {
-            console.error("Error updating driver:", error);
+            console.error("Error updating vehicle:", error);
         }
     };
 
     return (
         <div>
-            <h1>Actualizar Conductor</h1>
+            <h1>Actualizar Vehículo</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Nombre:</label>
+                    <label>Nombre del Vehículo:</label>
                     <input
                         type="text"
-                        name="DriverName"
-                        value={driver.DriverName}
+                        name="VehicleName"
+                        value={vehicle.VehicleName}
                         onChange={handleChange}
                         required
                     />
                 </div>
                 <div>
-                    <label>Número de Licencia:</label>
+                    <label>Número de Placa:</label>
                     <input
                         type="text"
-                        name="LicenseNumber"
-                        value={driver.LicenseNumber}
+                        name="LicensePlate"
+                        value={vehicle.LicensePlate}
                         onChange={handleChange}
                         required
                     />
                 </div>
                 <div>
-                    <label>Teléfono:</label>
+                    <label>Modelo:</label>
                     <input
                         type="text"
-                        name="Phone"
-                        value={driver.Phone}
+                        name="Model"
+                        value={vehicle.Model}
                         onChange={handleChange}
                         required
                     />
@@ -84,15 +84,15 @@ const UpdateDriverPage = () => {
                     <input
                         type="text"
                         name="ModifiedBy"
-                        value={driver.ModifiedBy}
+                        value={vehicle.ModifiedBy}
                         onChange={handleChange}
                         required
                     />
                 </div>
-                <button type="submit">Actualizar Conductor</button>
+                <button type="submit">Actualizar Vehículo</button>
             </form>
         </div>
     );
 };
 
-export default UpdateDriverPage;
+export default UpdateVehiclePage;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { GetAllUsers, DeleteUser } from '../Service/UserService.js'; // Asegúrate de tener estas funciones
+import { GetAllUsers, DeleteUser } from '../Service/UserService.js'; 
 import { Link, useNavigate } from 'react-router-dom';
 
 const UserList = () => {
@@ -10,8 +10,8 @@ const UserList = () => {
         const fetchUsers = async () => {
             try {
                 const data = await GetAllUsers();
-                console.log("Datos de la API de usuarios:", data); // Imprime los datos para ver la estructura
-                setUsers(data); // Aquí se asigna directamente el array de usuarios
+                console.log("Datos de la API de usuarios:", data); 
+                setUsers(data); 
             } catch (error) {
                 console.error("Error fetching users:", error);
             }
@@ -24,7 +24,7 @@ const UserList = () => {
         if (confirmDelete) {
             const result = await DeleteUser(id);
             if (result) {
-                setUsers(users.filter(user => user.userId !== id)); // Filtrar por userId
+                setUsers(users.filter(user => user.userId !== id)); 
             } else {
                 alert("Error al eliminar el usuario");
             }
@@ -42,7 +42,7 @@ const UserList = () => {
             <ul>
                 {users.map(user => (
                     <li key={user.userId}>
-                        <Link to={`/users/${user.userId}`}>{user.name}</Link> {/* Enlace al detalle del usuario */}
+                        <Link to={`/users/${user.userId}`}>{user.name}</Link> 
                         <button onClick={() => handleEdit(user.userId)}>Actualizar</button>
                         <button onClick={() => handleDelete(user.userId)}>Eliminar</button>
                     </li>
