@@ -19,7 +19,7 @@ const EntityDashboard = () => {
                     <Link to="/vehicles">Vehiculos</Link>
                 </li>
                 <li>
-                    <Link to="/rols">Roles</Link> 
+                    <Link to="/roles">Roles</Link> 
                 </li>
             </ul>
         </div>

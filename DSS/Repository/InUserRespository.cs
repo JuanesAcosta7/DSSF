@@ -62,6 +62,7 @@ namespace DSS.Repository
 
         public async Task UpdateUserAsync(User user)
         {
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             _context.users.Update(user);
             await _context.SaveChangesAsync();
         }
