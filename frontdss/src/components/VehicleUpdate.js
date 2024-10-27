@@ -1,60 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { GetDriverById, UpdateDriver } from '../Service/DriverService.js';
+import { GetVehicleById, UpdateVehicle } from '../Service/VehicleService.js'; 
 
-const UpdateDriverForm = () => {
-    const { Id } = useParams();
-    console.log("Driver ID:", Id); 
-    const [driver, setDriver] = useState({
-        driverId: 'Id',
-        driverName: '',
-        licenseNumber: '',
-        phone: '',
+const UpdateVehicleForm = () => {
+    const { id } = useParams();
+    console.log("Vehicle ID:", id); 
+    const [vehicle, setVehicle] = useState({
+        vehicleId: id,
+        vehiclePlate: '',
+        vehicleModel: '',
+        vehicleYear: '',
     });
 
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        const fetchDriver = async () => {
+        const fetchVehicle = async () => {
             try {
-                const fetchedDriver = await GetDriverById(Id);
-                if (fetchedDriver) {
-                    setDriver(fetchedDriver);
+                const fetchedVehicle = await GetVehicleById(id);
+                if (fetchedVehicle) {
+                    setVehicle(fetchedVehicle);
                 }
             } catch (error) {
-                console.error("Error fetching driver by id", error);
+                console.error("Error fetching vehicle by id", error);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchDriver();
-    }, [Id]);
+        fetchVehicle();
+    }, [id]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setDriver({ ...driver, [name]: value });
+        setVehicle({ ...vehicle, [name]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const updatedDriver = {
-            ...driver,
+        const updatedVehicle = {
+            ...vehicle,
             modified: new Date().toISOString(),
-            modifiedBy: 'tuNombreUsuario'
+            modifiedBy: 'tuNombreUsuario', 
         };
 
         try {
-            const result = await UpdateDriver(Id, updatedDriver);
+            const result = await UpdateVehicle(id, updatedVehicle);
             if (result) {
-                setMessage('Conductor actualizado con éxito');
+                setMessage('Vehículo actualizado con éxito');
             } else {
-                setMessage('Error actualizando el conductor');
+                setMessage('Error actualizando el vehículo');
             }
         } catch (error) {
-            setMessage('Error al actualizar el conductor');
+            setMessage('Error al actualizar el vehículo');
         }
     };
 
@@ -64,35 +64,35 @@ const UpdateDriverForm = () => {
 
     return (
         <div>
-            <h2>Actualizar Conductor</h2>
+            <h2>Actualizar Vehículo</h2>
             {message && <p>{message}</p>}
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Nombre del Conductor</label>
+                    <label>Placa del Vehículo</label>
                     <input
                         type="text"
-                        name="driverName"
-                        value={driver.driverName}
+                        name="vehiclePlate"
+                        value={vehicle.vehiclePlate}
                         onChange={handleInputChange}
                         required
                     />
                 </div>
                 <div>
-                    <label>Número de Licencia</label>
+                    <label>Modelo del Vehículo</label>
                     <input
                         type="text"
-                        name="licenseNumber"
-                        value={driver.licenseNumber}
+                        name="vehicleModel"
+                        value={vehicle.vehicleModel}
                         onChange={handleInputChange}
                         required
                     />
                 </div>
                 <div>
-                    <label>Teléfono</label>
+                    <label>Año del Vehículo</label>
                     <input
-                        type="text"
-                        name="phone"
-                        value={driver.phone}
+                        type="number"
+                        name="vehicleYear"
+                        value={vehicle.vehicleYear}
                         onChange={handleInputChange}
                         required
                     />
@@ -103,5 +103,4 @@ const UpdateDriverForm = () => {
     );
 };
 
-export default UpdateDriverForm;
-
+export default UpdateVehicleForm;

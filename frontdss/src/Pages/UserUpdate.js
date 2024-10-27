@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { GetUserById, UpdateUser } from '../Service/UserService.js'; // Asegúrate de tener estas funciones
+import { GetUserById, UpdateUser } from '../Service/UserService.js'; 
 
 const UpdateUserPage = () => {
-    const { id } = useParams(); // Captura el ID desde la URL
-    const navigate = useNavigate(); // Para redireccionar después de la actualización
+    const { id } = useParams(); 
+    const navigate = useNavigate(); 
     const [user, setUser] = useState({
         Name: '',
         Email: '',
@@ -12,10 +12,9 @@ const UpdateUserPage = () => {
         ModifiedBy: ''
     });
 
-    // Cargar datos del usuario al montar el componente
     useEffect(() => {
         const fetchUser = async () => {
-            console.log("User ID from URL:", id); // Verifica el valor del ID
+            console.log("User ID from URL:", id); 
             try {
                 const fetchedUser = await GetUserById(id);
                 if (fetchedUser) {
@@ -28,7 +27,6 @@ const UpdateUserPage = () => {
         fetchUser();
     }, [id]);
 
-    // Función para manejar cambios en el formulario
     const handleChange = (e) => {
         setUser({
             ...user,
@@ -36,13 +34,12 @@ const UpdateUserPage = () => {
         });
     };
 
-    // Función para manejar el submit del formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log("Updating user with data:", user); // Imprime los datos para verificar
+            console.log("Updating user with data:", user); 
             await UpdateUser(id, user);
-            navigate('/'); // Redirecciona después de la actualización
+            navigate('/'); 
         } catch (error) {
             console.error("Error updating user:", error);
         }

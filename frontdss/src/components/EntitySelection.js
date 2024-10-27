@@ -7,10 +7,19 @@ const EntityDashboard = () => {
             <h2>Selecciona una entidad</h2>
             <ul>
                 <li>
-                    <Link to="/drivers">Conductores</Link> {/* Enlace a la página de conductores */}
+                    <Link to="/drivers">Conductores</Link> 
                 </li>
                 <li>
-                    <Link to="/users">Usuarios</Link> {/* Enlace a la página de usuarios */}
+                    <Link to="/users">Usuarios</Link> 
+                </li>
+                <li>
+                    <Link to="/infractions">Infracciones</Link> 
+                </li>
+                <li>
+                    <Link to="/vehicles">Vehiculos</Link>
+                </li>
+                <li>
+                    <Link to="/rols">Roles</Link> 
                 </li>
             </ul>
         </div>

@@ -7,33 +7,32 @@ const CreateDriverForm = () => {
     const [licenseNumber, setLicenseNumber] = useState('');
     const [phone, setPhone] = useState('');
     const [modifiedBy, setModifiedBy] = useState('');
-    const [errorMessage, setErrorMessage] = useState(''); // Estado para manejar errores
+    const [errorMessage, setErrorMessage] = useState(''); 
 
-    const navigate = useNavigate(); // Usar useNavigate para redirigir a otras páginas
+    const navigate = useNavigate(); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrorMessage(''); // Resetea el mensaje de error
+        setErrorMessage(''); 
 
         const newDriver = {
             driverName,
             licenseNumber,
             phone,
-            modified: new Date().toISOString(), // Asigna la fecha actual
+            modified: new Date().toISOString(), 
             modifiedBy,
         };
 
         try {
             const result = await CreateDriver(newDriver);
             alert("Conductor creado exitosamente");
-            // Limpia el formulario después de crear el conductor
             setDriverName('');
             setLicenseNumber('');
             setPhone('');
             setModifiedBy('');
-            navigate('/drivers'); // Redirige a la lista de conductores
+            navigate('/drivers'); 
         } catch (error) {
-            setErrorMessage("Error al crear el conductor"); // Manejo de errores
+            setErrorMessage("Error al crear el conductor"); 
         }
     };
 
@@ -75,7 +74,7 @@ const CreateDriverForm = () => {
                     required
                 />
             </div>
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} {/* Muestra el mensaje de error */}
+            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             <button type="submit">Crear Conductor</button>
         </form>
     );

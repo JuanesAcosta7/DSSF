@@ -9,36 +9,36 @@ export const createUser = async (user) => {
 };
 export const GetAllUsers = async () => {
     try {
-        const response = await axios.get(API_URL); // Asegúrate de reemplazar con la URL correcta de tu API
-        return response.data; // Devuelve la lista de conductores
+        const response = await axios.get(API_URL); 
+        return response.data; 
     } catch (error) {
         console.error("Error fetching users:", error);
-        return []; // Devuelve un array vacío en caso de error
+        return []; 
     }
 }
 export const GetUserById = async (userId) => {
     try {
-        const response = await axios.get(`${API_URL}/${userId}`); // Asegúrate de incluir la barra antes de driverId
-        return response.data; // Asegúrate de devolver los datos correctos
+        const response = await axios.get(`${API_URL}/${userId}`); 
+        return response.data; 
     } catch (error) {
         console.error("Error fetching user by id", error);
-        throw error; // Lanza el error para que pueda ser manejado donde se llama
+        throw error; 
     }
 };
 export const UpdateUser = async (userId, userData) => {
     try {
-        const response = await axios.put(`${API_URL}/${userId}`, userData); // Agregar "/" antes de driverId
+        const response = await axios.put(`${API_URL}/${userId}`, userData);
         return response.data;
     } catch (error) {
         console.error("Error updating user:", error);
-        throw error; // Lanza el error para que pueda ser manejado en el componente
+        throw error; 
     }
 }; export const DeleteUser = async (id) => {
     try {
-        await axios.delete(`${API_URL}/${id}`); // Utiliza el método DELETE
-        return true; // Retorna true si la eliminación fue exitosa
+        await axios.delete(`${API_URL}/${id}`); 
+        return true;
     } catch (error) {
         console.error("Error deleting user:", error);
-        return false; // Retorna false en caso de error
+        return false; 
     }
 };

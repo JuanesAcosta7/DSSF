@@ -13,7 +13,7 @@ const LoginPage = () => {
         try {
             const response = await login({ email, password });
             if (response && response.data) {
-                navigate('/dashboard'); // Redirige a la página de entidades
+                navigate('/dashboard'); 
             }
         } catch (err) {
             setError("Credenciales inválidas");

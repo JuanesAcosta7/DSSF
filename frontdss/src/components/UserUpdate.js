@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { GetUserById, UpdateUser } from '../Service/UserService.js'; // Asegúrate de tener estas funciones en tu servicio
+import { GetUserById, UpdateUser } from '../Service/UserService.js'; 
 
 const UpdateUserForm = () => {
-    const { id } = useParams(); // Captura el ID del usuario desde la URL
+    const { id } = useParams(); 
     const [user, setUser] = useState({
         userId: id,
         name: '',
@@ -18,9 +18,9 @@ const UpdateUserForm = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const fetchedUser = await GetUserById(id); // Obtén los datos del usuario por ID
+                const fetchedUser = await GetUserById(id); 
                 if (fetchedUser) {
-                    setUser(fetchedUser); // Actualiza el estado con los datos del usuario
+                    setUser(fetchedUser); 
                 }
             } catch (error) {
                 console.error("Error fetching user by id", error);
@@ -30,11 +30,11 @@ const UpdateUserForm = () => {
         };
 
         fetchUser();
-    }, [id]); // Se ejecuta cuando cambia el ID
+    }, [id]); 
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setUser({ ...user, [name]: value }); // Actualiza el estado cuando cambian los inputs
+        setUser({ ...user, [name]: value }); 
     };
 
     const handleSubmit = async (e) => {
@@ -42,12 +42,12 @@ const UpdateUserForm = () => {
 
         const updatedUser = {
             ...user,
-            modified: new Date().toISOString(), // Actualiza la fecha de modificación
-            modifiedBy: 'tuNombreUsuario' // Actualiza el valor de 'modifiedBy' (esto lo puedes cambiar dinámicamente)
+            modified: new Date().toISOString(), 
+            modifiedBy: 'tuNombreUsuario' 
         };
 
         try {
-            const result = await UpdateUser(id, updatedUser); // Actualiza el usuario
+            const result = await UpdateUser(id, updatedUser);
             if (result) {
                 setMessage('Usuario actualizado con éxito');
             } else {
@@ -59,13 +59,13 @@ const UpdateUserForm = () => {
     };
 
     if (loading) {
-        return <div>Cargando...</div>; // Muestra un mensaje de carga mientras se obtienen los datos
+        return <div>Cargando...</div>; 
     }
 
     return (
         <div>
             <h2>Actualizar Usuario</h2>
-            {message && <p>{message}</p>} {/* Muestra un mensaje después de actualizar */}
+            {message && <p>{message}</p>} 
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Nombre</label>
