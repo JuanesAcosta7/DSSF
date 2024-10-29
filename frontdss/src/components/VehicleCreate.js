@@ -1,25 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CreateVehicle } from '../Service/VehicleService.js';
+import { GetAllDrivers } from '../Service/DriverService.js';
 import { useNavigate } from 'react-router-dom';
 
 const CreateVehicleForm = () => {
-    const [vehiclePlate, setVehiclePlate] = useState('');
-    const [vehicleModel, setVehicleModel] = useState('');
-    const [vehicleYear, setVehicleYear] = useState('');
+    const [VehiclePlate, setVehiclePlate] = useState('');
+    const [VehicleModel, setVehicleModel] = useState('');
+    const [VehicleYear, setVehicleYear] = useState('');
     const [modifiedBy, setModifiedBy] = useState('');
-    const [errorMessage, setErrorMessage] = useState(''); 
+    const [DriverId, setDriverId] = useState('');
+    const [drivers, setDrivers] = useState([]);
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchDrivers = async () => {
+            try {
+                const driverList = await GetAllDrivers();
+                console.log("Conductores obtenidos:", driverList); // Verificar si se obtienen los conductores
+                setDrivers(driverList);
+            } catch (error) {
+                console.error("Error al obtener conductores", error);
+                setErrorMessage("No se pudieron cargar los conductores"); // Mensaje de error en caso de fallo
+            }
+        };
+        fetchDrivers();
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrorMessage(''); 
+        setErrorMessage('');
 
         const newVehicle = {
-            vehiclePlate,
-            vehicleModel,
-            vehicleYear: parseInt(vehicleYear, 10), 
-            modified: new Date().toISOString(), 
+            VehiclePlate,
+            VehicleModel,
+            VehicleYear: parseInt(VehicleYear, 10),
+            Driver: { DriverId },
+            modified: new Date().toISOString(),
             modifiedBy,
         };
 
@@ -30,9 +48,11 @@ const CreateVehicleForm = () => {
             setVehicleModel('');
             setVehicleYear('');
             setModifiedBy('');
-            navigate('/vehicles'); 
+            setDriverId('');
+            navigate('/vehicles');
         } catch (error) {
-            setErrorMessage("Error al crear el vehículo"); 
+            console.error("Error al crear el vehículo", error);
+            setErrorMessage("Error al crear el vehículo");
         }
     };
 
@@ -42,7 +62,7 @@ const CreateVehicleForm = () => {
                 <label>Placa del Vehículo:</label>
                 <input
                     type="text"
-                    value={vehiclePlate}
+                    value={VehiclePlate}
                     onChange={(e) => setVehiclePlate(e.target.value)}
                     required
                 />
@@ -51,7 +71,7 @@ const CreateVehicleForm = () => {
                 <label>Modelo del Vehículo:</label>
                 <input
                     type="text"
-                    value={vehicleModel}
+                    value={VehicleModel}
                     onChange={(e) => setVehicleModel(e.target.value)}
                     required
                 />
@@ -60,7 +80,7 @@ const CreateVehicleForm = () => {
                 <label>Año del Vehículo:</label>
                 <input
                     type="number"
-                    value={vehicleYear}
+                    value={VehicleYear}
                     onChange={(e) => setVehicleYear(e.target.value)}
                     required
                 />
@@ -74,7 +94,22 @@ const CreateVehicleForm = () => {
                     required
                 />
             </div>
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} 
+            <div>
+                <label>Conductor:</label>
+                <select
+                    value={DriverId}
+                    onChange={(e) => setDriverId(e.target.value)}
+                    required
+                >
+                    <option value="">Seleccione un conductor</option>
+                    {drivers.map((driver) => (
+                        <option key={driver.driverId} value={driver.driverId}>
+                            {driver.DriverName}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             <button type="submit">Crear Vehículo</button>
         </form>
     );
