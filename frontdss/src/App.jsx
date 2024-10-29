@@ -22,6 +22,10 @@ import RolHome from './Pages/RolHome';
 import RolDetail from './components/RolDetail';
 import RolCreate from './Pages/RolCreate';
 import RolUpdate from './Pages/RolUpdate';
+import UserTypeHome from './Pages/UserTypeHome';
+import UserTypeDetail from './components/UserTypeDetail';
+import UserTypeCreate from './Pages/UserTypeCreate';
+import UserTypeUpdate from './Pages/UserTypeUpdate';
 function App() {
     return (
         <Router>
@@ -48,6 +52,10 @@ function App() {
                 <Route path="/roles/:Id" element={<RolDetail />} />
                 <Route path="/create-role" element={<RolCreate />} />
                 <Route path="/update-role/:id" element={<RolUpdate />} /> 
+                <Route path="/usertypes" element={<UserTypeHome />} />
+                <Route path="/usertypes/:Id" element={<UserTypeDetail />} />
+                <Route path="/create-usertype" element={<UserTypeCreate />} />
+                <Route path="/update-usertype/:id" element={<UserTypeUpdate />} /> 
             </Routes>
         </Router>
     );

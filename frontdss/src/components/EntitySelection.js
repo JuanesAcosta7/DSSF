@@ -21,6 +21,9 @@ const EntityDashboard = () => {
                 <li>
                     <Link to="/roles">Roles</Link> 
                 </li>
+                {/*<li>
+                    <Link to="/usertypes">UserTypes</Link>
+                </li>*/}
             </ul>
         </div>
     );
