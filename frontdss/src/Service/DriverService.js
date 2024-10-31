@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://www.sgitdssp.somee.com/api/DriverControllers';
+const API_URL = 'https://www.sgitdssp.somee.com/api/DriverControllers';
 
 export const GetAllDrivers = async () => {
     try {
@@ -25,7 +25,7 @@ export const GetDriverById = async (driverId) => {
 
 
 export const CreateDriver = async (driver) => {
-    const response = await fetch('http://www.sgitdssp.somee.com/api/DriverControllers/', {
+    const response = await fetch('https://www.sgitdssp.somee.com/api/DriverControllers/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

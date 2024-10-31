@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://www.sgitdssp.somee.com/api/VehicleControllers'; 
+const API_URL = 'https://www.sgitdssp.somee.com/api/VehicleControllers'; 
 
 
 export const GetAllVehicles = async () => {

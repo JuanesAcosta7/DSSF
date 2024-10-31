@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://www.sgitdssp.somee.com/api/InfractionControllers';
+const API_URL = 'https://www.sgitdssp.somee.com/api/InfractionControllers';
 
 export const GetAllInfractions = async () => {
     try {

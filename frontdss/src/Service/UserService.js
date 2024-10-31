@@ -1,11 +1,11 @@
 import axios from 'axios';
-const API_URL = 'http://www.sgitdssp.somee.com/api/UserControllers';
+const API_URL = 'https://www.sgitdssp.somee.com/api/UserControllers';
 
 export const login = async (credentials) => {
-    return await axios.post('http://www.sgitdssp.somee.com/api/UserControllers/login', credentials);
+    return await axios.post('https://www.sgitdssp.somee.com/api/UserControllers/login', credentials);
 };
 export const createUser = async (user) => {
-    return await axios.post('http://www.sgitdssp.somee.com/api/UserControllers', user);
+    return await axios.post('https://www.sgitdssp.somee.com/api/UserControllers', user);
 };
 export const GetAllUsers = async () => {
     try {

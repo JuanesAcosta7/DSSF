@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://www.sgitdssp.somee.com/api/RolControllers';
+const API_URL = 'https://www.sgitdssp.somee.com/api/RolControllers';
 
 export const GetAllRoles = async () => {
     try {
@@ -33,14 +33,14 @@ export const CreateRole = async (role) => {
         });
 
         if (!response.ok) {
-            const errorDetails = await response.json(); // Obtener el mensaje de error del servidor
+            const errorDetails = await response.json(); 
             throw new Error(`Error al crear el rol: ${errorDetails.message || 'Error desconocido'}`);
         }
 
         return await response.json();
     } catch (error) {
         console.error("Error creando rol:", error);
-        throw error; // Volver a lanzar el error para que se pueda manejar en el componente
+        throw error; 
     }
 };
 export const UpdateRole = async (rolId, roleData) => {
