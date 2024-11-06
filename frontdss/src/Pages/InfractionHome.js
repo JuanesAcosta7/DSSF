@@ -1,10 +1,10 @@
 import React from 'react';
 import InfractionList from '../components/InfractionList.js';
+import './List.css';
 
 const HomeInfraction = () => {
     return (
         <div>
-            <h1>Infracciones</h1>
             <InfractionList />
         </div>
     );

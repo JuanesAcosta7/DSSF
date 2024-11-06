@@ -1,10 +1,10 @@
 import React from 'react';
 import EntityDashboard from '../components/EntitySelection.js';
+import './Dash.css'
 
 const DashboardPage = () => {
     return (
         <div>
-            <h1>Bienvenido al Panel de Entidades</h1>
             <EntityDashboard />
         </div>
     );

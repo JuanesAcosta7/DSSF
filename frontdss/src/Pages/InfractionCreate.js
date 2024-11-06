@@ -1,10 +1,10 @@
 import React from 'react';
 import CreateInfractionForm from '../components/InfractionCreate.js';
+import './Create.css';
 
 const CreateInfractionPage = () => {
     return (
         <div>
-            <h1>Crear Nueva Infracción</h1>
             <CreateInfractionForm />
         </div>
     );

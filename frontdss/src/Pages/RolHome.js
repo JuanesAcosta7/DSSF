@@ -1,10 +1,10 @@
 import React from 'react';
 import RolList from '../components/RolList.js';
+import './List.css';
 
 const HomeRole = () => {
     return (
         <div>
-            <h1>Roles</h1>
             <RolList />
         </div>
     );

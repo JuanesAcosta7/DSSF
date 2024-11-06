@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CreateUserType } from '../Service/UserTypeService.js';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,6 +10,14 @@ const CreateUserTypeForm = () => {
 
     const navigate = useNavigate();
 
+    // Obtener el userId de localStorage al montar el componente
+    useEffect(() => {
+        const userIdFromStorage = localStorage.getItem('userId');
+        if (userIdFromStorage) {
+            setModifiedBy(userIdFromStorage); // Asignamos el userId al campo "modifiedBy"
+        }
+    }, []); // Solo se ejecuta una vez cuando el componente se monta
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrorMessage('');
@@ -18,7 +26,7 @@ const CreateUserTypeForm = () => {
             userId,
             typeId: roleId,
             Modified: new Date().toISOString(),
-            modifiedBy,
+            modifiedBy, // Usamos el userId en el campo modifiedBy
         };
 
         try {
@@ -34,37 +42,33 @@ const CreateUserTypeForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>ID del Usuario:</label>
-                <input
-                    type="text"
-                    value={userId}
-                    onChange={(e) => setUserId(e.target.value)}
-                    required
-                />
+        <div className="create-user-container">
+            <div className="create-user-box">
+                <h2>Crear Tipo de Usuario</h2>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label>ID del Usuario:</label>
+                        <input
+                            type="text"
+                            value={userId}
+                            onChange={(e) => setUserId(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>ID del Rol:</label>
+                        <input
+                            type="text"
+                            value={roleId}
+                            onChange={(e) => setRoleId(e.target.value)}
+                            required
+                        />
+                    </div>
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
+                    <button type="submit">Crear Tipo de Usuario</button>
+                </form>
             </div>
-            <div>
-                <label>ID del Rol:</label>
-                <input
-                    type="text"
-                    value={roleId}
-                    onChange={(e) => setRoleId(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
-                <label>Modificado por:</label>
-                <input
-                    type="text"
-                    value={modifiedBy}
-                    onChange={(e) => setModifiedBy(e.target.value)}
-                    required
-                />
-            </div>
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-            <button type="submit">Crear Tipo de Usuario</button>
-        </form>
+        </div>
     );
 };
 

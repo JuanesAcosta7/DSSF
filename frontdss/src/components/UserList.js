@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { GetAllUsers, DeleteUser } from '../Service/UserService.js'; 
+import { GetAllUsers, DeleteUser } from '../Service/UserService.js';
 import { Link, useNavigate } from 'react-router-dom';
 
 const UserList = () => {
@@ -10,8 +10,7 @@ const UserList = () => {
         const fetchUsers = async () => {
             try {
                 const data = await GetAllUsers();
-                console.log("Datos de la API de usuarios:", data); 
-                setUsers(data); 
+                setUsers(data);
             } catch (error) {
                 console.error("Error fetching users:", error);
             }
@@ -24,7 +23,7 @@ const UserList = () => {
         if (confirmDelete) {
             const result = await DeleteUser(id);
             if (result) {
-                setUsers(users.filter(user => user.userId !== id)); 
+                setUsers(users.filter(user => user.userId !== id));
             } else {
                 alert("Error al eliminar el usuario");
             }
@@ -36,18 +35,32 @@ const UserList = () => {
     };
 
     return (
-        <div>
+        <div className="driver-list-container">
             <h2>Lista de Usuarios</h2>
-            <button onClick={() => navigate('/create-user')}>Agregar Usuario</button>
-            <ul>
-                {users.map(user => (
-                    <li key={user.userId}>
-                        <Link to={`/users/${user.userId}`}>{user.name}</Link> 
-                        <button onClick={() => handleEdit(user.userId)}>Actualizar</button>
-                        <button onClick={() => handleDelete(user.userId)}>Eliminar</button>
-                    </li>
-                ))}
-            </ul>
+            <button onClick={() => navigate('/create-user')} className="add-button">Agregar Usuario</button>
+            <div className="table-container">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre del Usuario</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users.map(user => (
+                            <tr key={user.userId}>
+                                <td>
+                                    <Link to={`/users/${user.userId}`} className="table-link">{user.name}</Link>
+                                </td>
+                                <td className="table-actions">
+                                    <button onClick={() => handleEdit(user.userId)} className="update-button">Actualizar</button>
+                                    <button onClick={() => handleDelete(user.userId)} className="delete-button">Eliminar</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

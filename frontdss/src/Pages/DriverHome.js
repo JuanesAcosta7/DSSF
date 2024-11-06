@@ -1,10 +1,10 @@
 import React from 'react'; 
 import DriverList from '../components/DriverList.js';
+import './List.css';
 
 const HomeDriver = () => {
     return (
         <div>
-            <h1>Drivers</h1>
             <DriverList />
         </div>
     );

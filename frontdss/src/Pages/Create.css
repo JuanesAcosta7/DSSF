@@ -1,5 +1,5 @@
-/* Estilos para la página de inicio de sesión */
-.login-container {
+/* Estilos para la página de creación de usuario */
+.create-user-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,18 +8,18 @@
     font-family: 'Inter', system-ui, sans-serif;
 }
 
-.login-box {
+.create-user-box {
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     padding: 2rem;
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-    .login-box:hover {
+    .create-user-box:hover {
         transform: translateY(-5px);
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
@@ -38,6 +38,7 @@ form {
     gap: 1.5rem;
 }
 
+input[type="text"],
 input[type="email"],
 input[type="password"] {
     padding: 12px;
@@ -48,6 +49,7 @@ input[type="password"] {
     margin-top: 5px;
 }
 
+    input[type="text"]:focus,
     input[type="email"]:focus,
     input[type="password"]:focus {
         border-color: #4caf50;
@@ -74,6 +76,30 @@ button {
         transform: translateY(0);
     }
 
+/* Estilos para el checkbox y el enlace de las políticas */
+.checkbox-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+    .checkbox-container label {
+        font-size: 0.95em;
+        color: #555;
+    }
+
+    .checkbox-container a {
+        color: #4caf50;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+        .checkbox-container a:hover {
+            text-decoration: underline;
+        }
+
 /* Mensaje de error */
 .error-message {
     color: #d32f2f;
@@ -82,25 +108,9 @@ button {
     margin-bottom: 1rem;
 }
 
-/* Estilo para el enlace de "Crear cuenta" */
-p {
-    font-size: 1em;
-    color: #555;
-}
-
-    p a {
-        color: #4caf50;
-        font-weight: 500;
-        text-decoration: none;
-    }
-
-        p a:hover {
-            text-decoration: underline;
-        }
-
 /* Responsive */
 @media (max-width: 600px) {
-    .login-box {
+    .create-user-box {
         width: 90%;
     }
 

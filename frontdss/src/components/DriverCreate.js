@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CreateDriver } from '../Service/DriverService.js';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,20 +7,28 @@ const CreateDriverForm = () => {
     const [licenseNumber, setLicenseNumber] = useState('');
     const [phone, setPhone] = useState('');
     const [modifiedBy, setModifiedBy] = useState('');
-    const [errorMessage, setErrorMessage] = useState(''); 
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            setModifiedBy(userId); 
+        }
+    }, []); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrorMessage(''); 
+        setErrorMessage('');
 
         const newDriver = {
             driverName,
             licenseNumber,
             phone,
-            modified: new Date().toISOString(), 
-            modifiedBy,
+            modified: new Date().toISOString(),
+            modifiedBy, // Aquí se asigna el userId
         };
 
         try {
@@ -30,54 +38,56 @@ const CreateDriverForm = () => {
             setLicenseNumber('');
             setPhone('');
             setModifiedBy('');
-            navigate('/drivers'); 
+            navigate('/drivers');
         } catch (error) {
-            setErrorMessage("Error al crear el conductor"); 
+            setErrorMessage("Error al crear el conductor");
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Nombre del Conductor:</label>
-                <input
-                    type="text"
-                    value={driverName}
-                    onChange={(e) => setDriverName(e.target.value)}
-                    required
-                />
+        <div className="create-user-container">
+            <div className="create-user-box">
+                <h2>Crear Conductor</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label>Nombre del Conductor:</label>
+                        <input
+                            type="text"
+                            value={driverName}
+                            onChange={(e) => setDriverName(e.target.value)}
+                            className="form-input"
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Número de Licencia:</label>
+                        <input
+                            type="text"
+                            value={licenseNumber}
+                            onChange={(e) => setLicenseNumber(e.target.value)}
+                            className="form-input"
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Teléfono:</label>
+                        <input
+                            type="text"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            className="form-input"
+                            required
+                        />
+                    </div>
+                    
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
+                    <button type="submit" className="submit-btn">Crear Conductor</button>
+                </form>
             </div>
-            <div>
-                <label>Número de Licencia:</label>
-                <input
-                    type="text"
-                    value={licenseNumber}
-                    onChange={(e) => setLicenseNumber(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
-                <label>Teléfono:</label>
-                <input
-                    type="text"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    required
-                />
-            </div>
-             <div>
-                <label>Modificado por:</label>
-                <input
-                    type="text"
-                    value={modifiedBy}
-                    onChange={(e) => setModifiedBy(e.target.value)}
-                    required
-                />
-            </div>
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-            <button type="submit">Crear Conductor</button>
-        </form>
+        </div>
     );
 };
 
 export default CreateDriverForm;
+
+

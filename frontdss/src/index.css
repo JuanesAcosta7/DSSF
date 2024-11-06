@@ -1,32 +1,40 @@
+/* Estilos globales */
 :root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
     color-scheme: light dark;
     color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+    background-color: #f3f4f6; /* Fondo claro predeterminado */
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Enlaces */
 a {
     font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
+    color: #4a90e2;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
     a:hover {
-        color: #535bf2;
+        color: #357ab7;
+        text-decoration: underline;
     }
 
+/* Encabezados */
 h1 {
     font-size: 3.2em;
     line-height: 1.1;
-    color: darkred;
+    color: #d32f2f; /* Rojo oscuro */
+    font-weight: bold;
+    margin-bottom: 0.5em;
 }
 
+/* Estilos para los botones */
 button {
     border-radius: 8px;
     border: none;
@@ -34,14 +42,16 @@ button {
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
-    background-color: #1a1a1a; /* Color de fondo por defecto */
-    color: white; /* Color del texto del botón */
+    background-color: #4caf50; /* Verde bonito */
+    color: white;
     cursor: pointer;
-    transition: background-color 0.3s, border-color 0.25s;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
     button:hover {
-        background-color: #0056b3; /* Color al pasar el mouse */
+        background-color: #388e3c; /* Sombra más oscura al pasar el mouse */
+        transform: translateY(-2px);
     }
 
     button:focus,
@@ -49,6 +59,7 @@ button {
         outline: 4px auto -webkit-focus-ring-color;
     }
 
+/* Estilos para modo claro */
 @media (prefers-color-scheme: light) {
     :root {
         color: #213547;
@@ -56,71 +67,131 @@ button {
     }
 
     a:hover {
-        color: #747bff;
+        color: #5c6bc0; /* Azul claro en modo claro */
     }
 
     button {
-        background-color: #f9f9f9; /* Color de fondo en modo claro */
+        background-color: #e0f7fa; /* Fondo más suave en modo claro */
+        color: #333;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+
+        button:hover {
+            background-color: #b2ebf2;
+            transform: translateY(-2px);
+        }
 }
 
 /* Estilos generales para el cuerpo de la aplicación */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    background-color: #f3f4f6; /* Fondo claro predeterminado */
+    color: rgba(255, 255, 255, 0.87);
+    font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+    body.light-mode {
+        background-color: #ffffff;
+        color: #213547;
+    }
+
+    body.dark-mode {
+        background-color: #242424;
+        color: rgba(255, 255, 255, 0.87);
+    }
 
 /* Contenedor principal */
 .container {
-    max-width: 600px;
-    margin: auto;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
 }
 
-/* Títulos */
-h2 {
-    color: #343a40;
-    font-size: 24px;
-    margin-bottom: 20px;
+/* Estilos de las tarjetas */
+.card {
+    background-color: #ffffff;
+    color: #333;
+    border-radius: 10px;
+    padding: 2em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-/* Estilos para la lista de conductores */
+    .card:hover {
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        transform: translateY(-5px);
+    }
+
+/* Estilos de lista */
 ul {
-    list-style-type: none; /* Elimina los puntos de la lista */
+    list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
 li {
-    display: flex; /* Utiliza flexbox para alinear elementos */
-    justify-content: space-between; /* Espacio entre el texto y los botones */
-    padding: 10px;
-    border-bottom: 1px solid #dee2e6; /* Línea divisoria entre los elementos */
-    color: #343a40; /* Color del texto de la lista */
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fafafa;
+    color: #333;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
 }
 
-    li:last-child {
-        border-bottom: none; /* Elimina la línea divisoria en el último elemento */
+    li:hover {
+        background-color: #f0f0f0;
     }
 
-/* Estilo para el botón de agregar conductor */
-button.add-driver {
-    background-color: #28a745; /* Color de fondo para el botón de agregar */
-    margin-bottom: 20px; /* Espaciado inferior */
+/* Formularios */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #fafafa;
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 1rem;
+    transition: border-color 0.3s ease;
 }
 
-    button.add-driver:hover {
-        background-color: #218838; /* Color de fondo al pasar el mouse */
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    textarea:focus {
+        border-color: #4caf50;
+        outline: none;
     }
 
-/* Mensajes */
-p {
-    color: #dc3545; /* Color rojo para mensajes de error */
+input[type="checkbox"] {
+    margin-right: 10px;
 }
+
 label {
-    color: black;
+    font-size: 14px;
+    color: #888;
 }
+
+/* Estilos para el footer */
+footer {
+    margin-top: 2rem;
+    color: #888;
+    font-size: 14px;
+    text-align: center;
+}
+
+    footer a {
+        color: #4caf50;
+        transition: color 0.3s ease;
+    }
+
+        footer a:hover {
+            color: #388e3c;
+        }

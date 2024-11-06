@@ -1,10 +1,10 @@
 import React from 'react';
 import CreateUserForm from '../components/UserCreate.js'; 
+import './Create.css';
 
 const CreateUserPage = () => {
     return (
         <div>
-            <h1>Crear Nuevo Usuario</h1>
             <CreateUserForm /> 
         </div>
     );

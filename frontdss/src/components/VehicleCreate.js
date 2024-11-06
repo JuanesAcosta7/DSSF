@@ -14,19 +14,24 @@ const CreateVehicleForm = () => {
 
     const navigate = useNavigate();
 
+    // Cargar el ID del usuario desde localStorage y los conductores desde el backend
     useEffect(() => {
         const fetchDrivers = async () => {
             try {
                 const driverList = await GetAllDrivers();
-                console.log("Conductores obtenidos:", driverList); // Verificar si se obtienen los conductores
-                setDrivers(driverList);
+                setDrivers(driverList); // Guardamos los conductores en el estado
             } catch (error) {
-                console.error("Error al obtener conductores", error);
-                setErrorMessage("No se pudieron cargar los conductores"); // Mensaje de error en caso de fallo
+                setErrorMessage("No se pudieron cargar los conductores");
             }
         };
+
+        const userIdFromStorage = localStorage.getItem('userId');
+        if (userIdFromStorage) {
+            setModifiedBy(userIdFromStorage); // Asignamos el userId al campo "modificado por"
+        }
+
         fetchDrivers();
-    }, []);
+    }, []); // Solo se ejecuta una vez cuando el componente se monta
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,11 +43,11 @@ const CreateVehicleForm = () => {
             VehicleYear: parseInt(VehicleYear, 10),
             Driver: { DriverId },
             modified: new Date().toISOString(),
-            modifiedBy,
+            modifiedBy, // Usamos el userId en el campo modifiedBy
         };
 
         try {
-            const result = await CreateVehicle(newVehicle);
+            await CreateVehicle(newVehicle);
             alert("Vehículo creado exitosamente");
             setVehiclePlate('');
             setVehicleModel('');
@@ -51,68 +56,64 @@ const CreateVehicleForm = () => {
             setDriverId('');
             navigate('/vehicles');
         } catch (error) {
-            console.error("Error al crear el vehículo", error);
             setErrorMessage("Error al crear el vehículo");
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Placa del Vehículo:</label>
-                <input
-                    type="text"
-                    value={VehiclePlate}
-                    onChange={(e) => setVehiclePlate(e.target.value)}
-                    required
-                />
+        <div className="create-user-container">
+            <div className="create-user-box">
+                <h2>Crear Vehículo</h2>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label>Placa del Vehículo:</label>
+                        <input
+                            type="text"
+                            value={VehiclePlate}
+                            onChange={(e) => setVehiclePlate(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>Modelo del Vehículo:</label>
+                        <input
+                            type="text"
+                            value={VehicleModel}
+                            onChange={(e) => setVehicleModel(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>Año del Vehículo:</label>
+                        <input
+                            type="number"
+                            value={VehicleYear}
+                            onChange={(e) => setVehicleYear(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>Conductor:</label>
+                        <select
+                            value={DriverId}
+                            onChange={(e) => setDriverId(e.target.value)}
+                            required
+                        >
+                            <option value="">Seleccione un conductor</option>
+                            {drivers.map((driver) => (
+                                <option key={driver.DriverId} value={driver.DriverId}>
+                                    {driver.DriverName}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
+                    <button type="submit">Crear Vehículo</button>
+                </form>
             </div>
-            <div>
-                <label>Modelo del Vehículo:</label>
-                <input
-                    type="text"
-                    value={VehicleModel}
-                    onChange={(e) => setVehicleModel(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
-                <label>Año del Vehículo:</label>
-                <input
-                    type="number"
-                    value={VehicleYear}
-                    onChange={(e) => setVehicleYear(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
-                <label>Modificado por:</label>
-                <input
-                    type="text"
-                    value={modifiedBy}
-                    onChange={(e) => setModifiedBy(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
-                <label>Conductor:</label>
-                <select
-                    value={DriverId}
-                    onChange={(e) => setDriverId(e.target.value)}
-                    required
-                >
-                    <option value="">Seleccione un conductor</option>
-                    {drivers.map((driver) => (
-                        <option key={driver.driverId} value={driver.driverId}>
-                            {driver.DriverName}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-            <button type="submit">Crear Vehículo</button>
-        </form>
+        </div>
     );
 };
 
 export default CreateVehicleForm;
+

@@ -10,7 +10,6 @@ const RoleList = () => {
         const fetchRoles = async () => {
             try {
                 const data = await GetAllRoles();
-                console.log("Datos de la API de conductores:", data); 
                 setRoles(data);
             } catch (error) {
                 console.error("Error fetching roles:", error);
@@ -33,23 +32,35 @@ const RoleList = () => {
 
     const handleEdit = (id) => {
         navigate(`/update-role/${id}`);
-
     };
 
     return (
-        <div>
+        <div className="driver-list-container">
             <h2>Lista de Roles</h2>
-            <button onClick={() => navigate('/create-role')}>Agregar Rol</button>
-            <ul>
-                {roles.map(rol => (
-                    <li key={rol.rolId}>
-                       
-                        <Link to={`/roles/${rol.rolId}`}>{rol.rol}</Link>
-                        <button onClick={() => handleEdit(rol.rolId)}>Actualizar</button>
-                        <button onClick={() => handleDelete(rol.rolId)}>Eliminar</button>
-                    </li>
-                ))}
-            </ul>
+            <button onClick={() => navigate('/create-role')} className="add-button">Agregar Rol</button>
+            <div className="table-container">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre del Rol</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {roles.map(role => (
+                            <tr key={role.rolId}>
+                                <td>
+                                    <Link to={`/roles/${role.rolId}`} className="table-link">{role.rol}</Link>
+                                </td>
+                                <td className="table-actions">
+                                    <button onClick={() => handleEdit(role.rolId)} className="update-button">Actualizar</button>
+                                    <button onClick={() => handleDelete(role.rolId)} className="delete-button">Eliminar</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };
