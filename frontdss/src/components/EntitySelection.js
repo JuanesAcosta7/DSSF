@@ -1,11 +1,19 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const EntityDashboard = () => {
+const EntityDashboard = ({ userName }) => {
+    // Obtener el ID del usuario desde el localStorage
+    const userId = localStorage.getItem('userId');
+
     return (
         <div className="dashboard-container">
-            <h2>Selecciona una entidad</h2>
+            <h2>Bienvenido, {userName}</h2>
+            <h3>Selecciona una entidad</h3>
             <ul className="entity-list">
+                {/* Usar el ID del usuario para crear el enlace a su perfil */}
+                <li className="entity-item">
+                    <NavLink to={`/users/${userId}`} activeClassName="active-link">Mi Perfil</NavLink>
+                </li>
                 <li className="entity-item">
                     <NavLink to="/drivers" activeClassName="active-link">Conductores</NavLink>
                 </li>
@@ -30,3 +38,4 @@ const EntityDashboard = () => {
 };
 
 export default EntityDashboard;
+

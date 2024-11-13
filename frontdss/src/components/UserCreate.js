@@ -47,7 +47,7 @@ const CreateUserPage = () => {
             const newUser = { name, email, password, modifiedBy: 'Usuario' };
             await createUser(newUser);
             setLoading(false);
-            navigate('/login');
+            navigate('/');
         } catch (err) {
             setLoading(false);
             setError('Error al crear el usuario');
